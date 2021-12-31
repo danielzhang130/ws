@@ -49,7 +49,19 @@ function get_response($param)
             throw new RuntimeException($status_code . $response->getBody()->getContents());
         }
     }
-    return $data['data'];
+    if (isset($data['data']))
+    {
+        return $data['data'];
+    }
+    else if (isset($data['account']))
+    {
+        return $data;
+    }
+    else
+    {
+        var_dump($data);
+        throw new RuntimeException();
+    }
 }
 
 function refresh()
