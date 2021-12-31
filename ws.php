@@ -44,7 +44,7 @@ function get_response($param)
     if ($status_code != 200) {
         if ($status_code == 401) {
             refresh();
-            $data = get_response();
+            $data = get_response($param);
         } else {
             throw new RuntimeException($status_code . $response->getBody()->getContents());
         }
@@ -139,13 +139,20 @@ function token()
 
 require 'config.php';
 
-$time = time();
-
-foreach ($params as $param)
+if ($argc == 2 && $argv[1] == 'token')
 {
-    $file = fopen("$out/${param[0]}-${param[1]}.csv", 'a');
-    fwrite($file, date('j n Y', $time) . ',' . get_return($param));
-    fwrite($file, PHP_EOL);
-    fclose($file);
+    token();
+}
+else
+{
+    $time = time();
+
+    foreach ($params as $param)
+    {
+        $file = fopen("$out/${param[0]}-${param[1]}.csv", 'a');
+        fwrite($file, date('j n Y', $time) . ',' . get_return($param));
+        fwrite($file, PHP_EOL);
+        fclose($file);
+    }
 }
 ?>
