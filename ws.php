@@ -105,6 +105,7 @@ function refresh()
 function token()
 {
     require 'constants.php';
+    require 'config.php';
 
     echo "pass";
     $pass = trim(fgets(STDIN));
